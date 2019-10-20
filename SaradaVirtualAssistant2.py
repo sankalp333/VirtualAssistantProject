@@ -52,12 +52,15 @@ class Widget:
 		root = Tk()
 		root.title('Sarada(Version 1.0)')
 		#root.config(background = 'Blue')
-		root.geometry('350x600')
+		root.geometry('1024x768')
 		root.resizable(0,0)
 		#root.iconbitmap("vegeta.gif")
-		img = ImageTk.PhotoImage(Image.open("jarvis.gif"))
+		
+		
+		img = ImageTk.PhotoImage(Image.open("assistant.gif"))
 		panel = Label(root, image = img)
-		panel.pack(side="bottom",fill="both",expand="no")
+		panel.pack(side="top",fill="x",expand="no")
+		
 		
 		self.compText = StringVar()
 		self.userText   = StringVar()
@@ -65,22 +68,22 @@ class Widget:
 		self.userText.set('Click \'Start Listening\' to Give Commands')
 		
 		userFrame = LabelFrame(root,text="SANKALP",font=('Black ops one',10,'bold'))
-		userFrame.pack(fill="both",expand="yes")
+		userFrame.pack(side="left")
 		
-		left2 = Message(userFrame,textvariable=self.userText,bg='Green',fg='white')
-		left2.config(font=("Comic Sans MS",10,'bold'))
-		left2.pack(fill='both',expand='yes')
+		left2 = Message(userFrame,textvariable=self.userText,bg="green",fg='black')
+		left2.config(font=("Comic Sans MS",15,'bold'))
+		left2.pack(side="left")
 		
 		compFrame = LabelFrame(root,text="SARADA",font=('Black ops one',10,'bold'))
-		compFrame.pack(fill="both",expand="yes")
+		compFrame.pack(side="right")
 		
-		left1 = Message(compFrame,textvariable=self.compText,bg='Magenta',fg='white')
-		left1.config(font=("Comic Sans MS",10,'bold'))
-		left1.pack(fill='both',expand='yes')
+		left1 = Message(compFrame,textvariable=self.compText,bg="green",fg='black')
+		left1.config(font=("Comic Sans MS",15,'bold'))
+		left1.pack(side = "right")
 		
-		btn   = Button(root,text='Start Listening!',font=('Black ops one',10,'bold'),bg='Blue',fg='Blue',command=self.clicked).pack(fill='x',expand='no')
+		btn   = Button(root,text='Start Listening!',font=('Black ops one',20,'bold'),bg='Blue',fg='Blue',command=self.clicked).pack(side="left")
 		
-		btn2 = Button(root,text='Close!',font=('Black ops one',10,'bold'),bg='Blue',fg='Red',command=root.destroy).pack(fill='x',expand='no')
+		btn2 = Button(root,text='Close!',font=('Black ops one',20,'bold'),bg='Blue',fg='Red',command=root.destroy).pack(side="right")
 		
 		#speak('Hello, I am Sarada! What should I do for You?')
 		self.compText.set('Hello I am Sarada! What should I do for you')
@@ -100,14 +103,35 @@ class Widget:
 			self.compText.set('What are you doing Sankalp?.')
 			speak('What are you doing Sankalp?.')
 		
-		elif 'open youtube' in query:
-			self.compText.set('okay')
-			speak('Sure Sankalp. Watch only productive videos. Have fun!')
-			webbrowser.open('https://www.youtube.com')
-		
 		elif 'bye' in query:
-			self.compText.set('Bye ' + 'Sir' + ', have a good day.')
+			self.compText.set('Bye ' + 'Sankalp' + ', Have a good day.' + 'I will take a nap for sometime')
 			speak('Bye ' + 'Sankalp' + ', Have a good day.' + 'I will take a nap for sometime')
+		
+		elif 'what can you do' in query:
+			self.compText.set('Here are the two things that I can do for now Sankalp. I can open websites for you. I can also search information on wikipedia for you' )
+			speak('Here are the two things that I can do for now Sankalp. I can open websites for you. I can also search information on wikipedia for you')
+		
+		elif 'open a website' in query:
+			self.compText.set("Sure Sankalp. Which website do you want me to open for you?")
+			speak("Sure Sankalp. Which website do you want me to open for you?")
+			query = myCommand()
+			self.userText.set('Listening...')
+			self.userText.set(query)
+			query = query.lower()
+			self.compText.set("Sure Sankalp. I will open " + query + " site for you in a second")
+			speak('Sure Sankalp. I will open ' + query + ' site for you in a second')
+			webbrowser.open('https://' + query + '.com')
+		
+		elif 'i need some information' in query:
+			self.compText.set("About what Sankalp?")
+			speak("About what Sankalp?")
+			query = myCommand()
+			self.userText.set('Listening...')
+			self.userText.set(query)
+			query = query.lower()
+			self.compText.set("Sure Sankalp. I will tell you about " + query + " in a second")
+			speak("Sure Sankalp. I will tell you about " + query + " in a second")
+			speak("'" + wikipedia.summary(query,sentences=2) + "'")
 		
 
 
